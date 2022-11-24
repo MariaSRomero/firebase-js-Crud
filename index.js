@@ -1,10 +1,18 @@
-import {saveTask, getTasks, onGetTasks, deleteTasks, getTask, updateTasks} from "./firebase.js";
+import {saveTask, getTasks, onGetTasks, deleteTasks, getTask, updateTasks, saveImage} from "./firebase.js";
 
 const taskForm = document.getElementById("task-form");
 const taskContainer = document.getElementById("task-container");
 
 let editStatus = false;
 let id = '';
+
+const uploadFileAction = (e) => {
+    const file = e.target.files[0];
+     if(file.type.includes('image')) {
+        console.log("Si es una imagen");
+        saveImage(file);
+     }
+}
 
 window.addEventListener("DOMContentLoaded", async () => {
     
@@ -49,6 +57,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             });
         });
     });
+    document.querySelector("#file-task").addEventListener('change', uploadFileAction);
 });
 
 taskForm.addEventListener('submit', (e) => {
