@@ -62,16 +62,25 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const title = taskForm['task-title'];
-    const description = taskForm['task-description'];
+    const title = taskForm['task-title'].value;
+    const description = taskForm['task-description'].value;
+    const imageUrl = document.querySelector('#image').src;
+
+    if(title.length > 3 && description.length > 3){
 
     if (!editStatus) {
-        saveTask(title.value, description.value);
+        saveTask(title, description, imageUrl);
+        document.querySelector('#image').src = '';
     }else{
-        updateTasks(id, {title: title.value, description: description.value});
+        updateTasks(id, {title: title, description: description});
 
         editStatus = false;
+        document.querySelector('#btn-task-save').innerText = 'Save';
     }
 
-    taskForm.reset();
+     taskForm.reset();
+    }else{
+        alert('Debes de escribir algo');
+    }
+
 });
